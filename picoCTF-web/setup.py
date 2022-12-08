@@ -61,30 +61,33 @@ setup(
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
+    # "Flask==1.1.1",
+    # "werkzeug<=0.16.1"
+    # "flask-restplus==0.13.0",
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         "bs4==0.0.1",
         "cchardet==2.1.4",
         "docker[tls]==4.2.0",
         "eventlet==0.25.1",
-        "Flask==1.1.1",
+        "Flask==1.1.4",
         "Flask-Bcrypt==0.7.1",
         "Flask-Mail==0.9.1",
         "flask-restplus==0.13.0",
         "gunicorn==19.9.0",
         "marshmallow==3.0.1",
-        "py==1.10.0",
+        "py==1.8.0",
         "pymongo==3.9.0",
         "spur==0.3.21",
         "voluptuous==0.11.7",
         "walrus==0.7.1",
-        "werkzeug<=0.16.1"
+        "werkzeug==0.16.1"
     ],
     extras_require={
         "dev": [
             "black",
             "flake8",
-            "locustio",
+            "locustio==0.14.6",
             "pydocstyle",
             "pytest",
             "pytest-cov",

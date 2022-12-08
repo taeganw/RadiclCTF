@@ -14,16 +14,21 @@ all:
       ansible_host : "shell.example.com"   # UPDATE: with fully qualified domain name
     web:
       hostname     : "picoCTF-web-PROD"
-      ansible_host : "ctf.example.com"     # UPDATE: with fully qualified domain name
+      ansible_host : "web.example.com"     # UPDATE: with fully qualified domain name
 
   vars:
+      # Pico Problems Folder Location
+      PicoProblemsFolder        : ../../problemSet
+      # Pico Scripts Folder Location
+      PicoScripts               : ../../picoCTF_util_scripts
+
       # UPDATE: this is the default key specified in terraform/variables.tf
       # that was automatically added to the machines when launched
       ansible_ssh_private_key_file : "~/.ssh/picoCTF_production_rsa"
 
       # UPDATE: with an administrator's email
       # Used in auto_add_web_admin and to get SSL/TLS certificates
-      admin_email : "admin@example.com"
+      admin_email : "admin@cybercorectf.org"
 
       ###
       # *** Reasonable defaults ***
@@ -33,7 +38,7 @@ all:
       # beyond this point. However, we recommend you read through the settings
       # to gain an appreciation for additional options.
       ###
- 
+
       # ubuntu is the default user for the AWS Ubuntu AMI
       ansible_user : "ubuntu"
 
@@ -46,9 +51,9 @@ all:
       pico_src_dir : "{{ playbook_dir }}/../"
 
       # SSH admin keys (Optional)
-      admin_keys : []
-      # Disable Unattended Upgrades
-      disable_unattended_upgrades : False
+      admin_keys : [
+	"./admin_keys/pico.pub"
+      ]
 
       ## Web automation and Features (Optional):
       # These are currently setup to fully configure and start an event. This
@@ -56,7 +61,7 @@ all:
       # a live event you will likely want to disable some of these.
       auto_add_web_admin     : True
       auto_add_shell         : True
-      auto_load_problems     : True
+      auto_load_problems     : False
       auto_start_ctf         : True
       enable_docker          : True
 
@@ -65,7 +70,7 @@ all:
       # Encrypt by using certbot. In order for this functionality to work
       # you must have a domain registered and pointing at your hosts. The
       # `ansible_host` for both `web` and `shell` should be domain names.
-      enable_certbot : True
+      enable_certbot : False
 
       # NOTE: if you plan on creating/destroying your infrastructure many times
       # you might want to consider running in staging mode to prevent hitting a
@@ -78,11 +83,11 @@ all:
 
       # Set whether `ansible_host` is an IP address or a domain name (DNS) In a
       # production environment we recommend DNS so that you can easily use SSL/TLS
-      host_type : "DNS"  # valid options 'IP' or 'DNS'
+      host_type : "IP"  # valid options 'IP' or 'DNS'
 
       ## Database settings:
       # Should not need to be changed.
-      on_aws           : True
+      on_aws           : False
       mongodb_web_user : "picoWeb"
       env_db_users     :
         - {

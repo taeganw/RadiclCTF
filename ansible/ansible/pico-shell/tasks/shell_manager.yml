@@ -1,0 +1,25 @@
+---
+# Playbook that installs and configures the picoCTF shell_manager from source
+
+# Source was synced in common
+- name: Install picoCTF-shell-manager from source
+  pip:
+    name: "file://{{ shell_manager_dir }}"
+    virtualenv: "{{ virtualenv_dir }}"
+    extra_args: "--upgrade"
+
+# Fix Found Problems with shell_manager jinja and markupsafe https://trac.edgewall.org/ticket/13404 
+- name: Install Jinja2 to latest version
+  pip:
+    name: jinja2
+    virtualenv: "{{ virtualenv_dir }}"
+#    virtualenv_python: python3.7
+    state: latest
+
+# Fix Found Problems with shell_manager jinja and markupsafe https://trac.edgewall.org/ticket/13404 
+#- name: Install Jinja2 to latest version
+#  pip:
+#    name: jinja2
+#    virtualenv: "{{ virtualenv_dir }}"
+#    virtualenv_python: python3.8
+#    state: latest

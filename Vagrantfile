@@ -6,10 +6,6 @@
 
 require 'etc'
 
-if ENV['SHELL_DISK_SIZE'] then
-  ENV['VAGRANT_EXPERIMENTAL'] = "disks"
-end
-
 # Extract suffix if working directory starts with prefix; otherwise return "".
 def compute_auto_name_suffix(prefix = "picoCTF")
   dirname = File.basename(Dir.getwd)
@@ -17,13 +13,10 @@ def compute_auto_name_suffix(prefix = "picoCTF")
 end
 
 Vagrant.configure("2") do |config|
-
+  config.vm.boot_timeout = 1000 
   config.vm.define "shell", primary: true do |shell|
-    shell.vm.box = "ubuntu/bionic64"
-    if ENV['SHELL_DISK_SIZE'] then
-      shell.vm.disk :disk, size: (ENV['SHELL_DISK_SIZE']), primary: true
-    end
-    shell.vm.network "private_network", ip: (ENV['SIP'] || '192.168.2.3'), nic_type: "virtio"
+    shell.vm.box = "ubuntu/focal64"
+    shell.vm.network "private_network", ip: (ENV['SIP'] || '192.168.56.30'), nic_type: "virtio"
     shell.vm.network "forwarded_port", guest: 2376, host: 2223, auto_correct: true
 
     shell.vm.synced_folder ".", "/vagrant", disabled: true
@@ -38,15 +31,13 @@ Vagrant.configure("2") do |config|
     # ensures that SIP/WIP are passed to ansible_local provisioner can use lookup('env',...)
     shell.vm.provision "shell" do |s|
       s.path = "./scripts/vagrant-env.sh"
-      s.env  = {SIP: (ENV['SIP'] || '192.168.2.3'), WIP: (ENV['WIP'] || '192.168.2.2')}
+      s.env  = {SIP: (ENV['SIP'] || '192.168.56.30'), WIP: (ENV['WIP'] || '192.168.56.20')}
     end
 
     # uses ansible_local so that a user does not need to have ansible installed
-    shell.vm.provision "ansible_local" do |ansible|
+    shell.vm.provision :ansible_local do |ansible|
       ansible.install = "yes"
-      ansible.install_mode = "pip"
-      ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | sudo python"
-      ansible.version = "2.9.11"
+      ansible.install_mode = "default"
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.provisioning_path = "/picoCTF/infra_local/"
@@ -70,8 +61,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "web", primary: true do |web|
-    web.vm.box = "ubuntu/bionic64"
-    web.vm.network "private_network", ip: (ENV['WIP'] || '192.168.2.2'), nic_type: "virtio"
+    web.vm.box = "ubuntu/focal64"
+    web.vm.network "private_network", ip: (ENV['WIP'] || '192.168.56.20'), nic_type: "virtio"
 
     web.vm.synced_folder ".", "/vagrant", disabled: true
     if Vagrant::Util::Platform.windows? then
@@ -85,15 +76,13 @@ Vagrant.configure("2") do |config|
     # ensures that SIP/WIP are passed to ansible_local provisioner can use lookup('env',...)
     web.vm.provision "shell" do |s|
       s.path = "./scripts/vagrant-env.sh"
-      s.env  = {SIP: (ENV['SIP'] || '192.168.2.3'), WIP: (ENV['WIP'] || '192.168.2.2')}
+      s.env  = {SIP: (ENV['SIP'] || '192.168.56.30'), WIP: (ENV['WIP'] || '192.168.56.20')}
     end
 
     # uses ansible_local so that a user does not need to have ansible installed
-    web.vm.provision "ansible_local" do |ansible|
+    web.vm.provision :ansible_local do |ansible|
       ansible.install = "yes"
-      ansible.install_mode = "pip"
-      ansible.pip_install_cmd = "curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | sudo python"
-      ansible.version = "2.9.11"
+      ansible.install_mode = "default"
       ansible.compatibility_mode = "2.0"
       ansible.playbook = "site.yml"
       ansible.provisioning_path = "/picoCTF/infra_local/"

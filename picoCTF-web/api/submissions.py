@@ -45,7 +45,16 @@ def grade_problem(pid, key, tid=None):
     assigned_instance = api.problem.get_instance_data(pid, tid)
 
     suspicious = False
-    correct = assigned_instance["flag"] in key
+    ###########################################################
+    #Changed to allow List of answers instead of single string
+    for item in assigned_instance["flag"]:
+        if item in key:
+            correct = True
+            break
+        else:
+            correct = False
+    #correct = assigned_instance["flag"] in key
+    ###########################################################
     if not correct and DEBUG_KEY is not None:
         correct = DEBUG_KEY in key
     if not correct:

@@ -18,10 +18,12 @@ all:
       ansible_ssh_private_key_file: "../.vagrant/machines/web/virtualbox/private_key"   # vagrant created
 
   vars:
+      # Pico Problems Folder Location
+      PicoProblemsFolder	: ../../problemSet
+      # Pico Scripts Folder Location
+      PicoScripts		: ../../picoCTF_util_scripts
       # SSH admin keys (Optional)
       admin_keys                  : []
-      # Disable Unattended Upgrades
-      disable_unattended_upgrades : False
 
       # Web automation and Features (Optional)
       auto_add_web_admin          : True
@@ -49,5 +51,5 @@ all:
       flask_app_secret_key            : "INSECURE_DEFAULT_CHANGE_ME"
       flask_app_rate_limit_bypass_key : "INSECURE_DEFAULT_CHANGE_ME"
       shell_manager_deploy_secret     : "INSECURE_DEFAULT_CHANGE_ME"
-      web_admin_pw                    : "dev"                         # web_admin: "ctfadmin"
+      web_admin_pw                    : "INSECURE_DEFAULT_CHANGE_ME"                         # web_admin: "ctfadmin"
       admin_email                     : "admin@example.com"           # will no be able to reset password

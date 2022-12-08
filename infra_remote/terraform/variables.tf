@@ -12,16 +12,16 @@ locals {
   ctf = "picoCTF"
 
   # AWS Settings: choose best for where your CTF is
-  region                  = "us-east-1"
+  region                  = "us-west-2"
   profile                 = "picoCTF"
   shared_credentials_file = "~/.aws/credentials"
 
   # SSH Settings: local path to key that will be authorized on the machines
-  public_key_path = "~/.ssh/picoCTF_production_rsa.pub"
+  public_key_path = "~/.ssh/will8798picoCTF.pub"
 
   # Machine Instance Type
-  web_instance_type   = "t2.micro"
-  shell_instance_type = "t2.micro"
+  web_instance_type   = "t2.medium"
+  shell_instance_type = "t2.medium"
 }
 
 ###
@@ -73,10 +73,12 @@ data "aws_availability_zones" "available" {}
 data "aws_ami" "ubuntu" {
   most_recent = true
 
+  #NEW - ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129
+  #OLD - ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20211129
   # pinned to a specific release to prevent drift
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20200430"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129"]
   }
 
   filter {

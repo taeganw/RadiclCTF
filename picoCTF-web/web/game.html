@@ -1,0 +1,28 @@
+---
+layout: default
+title: Game
+---
+<div class="container">
+    <!-- Add Unity game build to `game/unitygame/` before deploying -->
+
+    <script src="game/unitygame/TemplateData/UnityProgress.js"></script>
+    <script src="game/unitygame/Build/UnityLoader.js"></script>
+    <script>
+        var unityInstance = UnityLoader.instantiate("unityContainer", "game/unitygame/Build/PicoCTF.json", {onProgress: UnityProgress});
+    </script>
+
+    <div class="webgl-content">
+
+         <!-- CSS is ripped and applied directly to the following below 2 div from `TemplateData/style.css` to avoid possible CSS conflicts. Works but messes up progress loading by placing it at the bottom instead of normal center. -->
+        <div id="unityContainer" style="width: 1280px; height: 720px"></div>
+        <div style="margin-top: 5px; width:1280px; height: 38px; line-height: 38px; font-family: Helvetica, Verdana, Arial, sans-serif; font-size: 18px;">
+            <div class="webgl-logo"></div>
+            <div class="title">
+	        Cybercore CTF Game
+	        <img src="game/unitygame/TemplateData/fullscreen.png" onclick="unityInstance.SetFullscreen(1)" style="width: 38px; float: right;">
+	   </div>
+        </div>
+
+    </div>
+
+</div>

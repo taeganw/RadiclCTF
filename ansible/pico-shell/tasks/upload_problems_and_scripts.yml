@@ -1,0 +1,22 @@
+---
+# Playbook that uploads the problems and scripts to shell server
+
+- name: Upload Pico Scripts to Ubuntu home
+  copy:
+    src: "{{ PicoScripts }}"
+    dest: /home/ubuntu/pico_scripts
+    owner: ubuntu
+    group: ubuntu
+    mode: 0755
+    force: no
+  become: true
+
+- name: Upload Problems Folder to Ubuntu home
+  copy:
+    src: "{{ PicoProblemsFolder }}"
+    dest: /home/ubuntu/problems
+    owner: ubuntu
+    group: ubuntu
+    mode: 0755
+    force: no
+  become: true

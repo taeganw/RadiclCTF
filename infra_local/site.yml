@@ -6,7 +6,10 @@
 - hosts: shell
   become: yes
   become_method: sudo
+  gather_facts: no
   pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python 
     - import_tasks: "./tasks/vagrant_shell_bootstrap.yml"
   roles:
     - {role: common     , tags: ["common"]}
@@ -16,7 +19,10 @@
 - hosts: web
   become: yes
   become_method: sudo
+  gather_facts: no
   pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python 
     - import_tasks: "./tasks/vagrant_web_bootstrap.yml"
   roles:
     - {role: common     , tags: ["common"]}

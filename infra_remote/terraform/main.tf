@@ -91,10 +91,10 @@ resource "aws_instance" "web" {
     vpc_security_group_ids = [aws_security_group.web.id]
     subnet_id              = aws_subnet.public.id
     private_ip             = local.web_private_ip
-  
+
     # metadata
     key_name = aws_key_pair.auth.id
-    tags     = merge(local.default_tags, map("Name", local.web_name))
+    tags     = merge(local.default_tags, tomap({"Name"=local.web_name}))
 }
 
 resource "aws_instance" "shell" {
@@ -111,7 +111,11 @@ resource "aws_instance" "shell" {
 
     # metadata
     key_name = aws_key_pair.auth.id
-    tags     = merge(local.default_tags, map("Name", local.shell_name))
+    root_block_device {
+      volume_type = "gp2"
+      volume_size = 15
+    }
+    tags     = merge(local.default_tags, tomap({"Name"=local.shell_name}))
 }
 
 
@@ -125,14 +129,14 @@ resource "aws_instance" "shell" {
 resource "aws_eip" "web" {
     instance = aws_instance.web.id
     vpc      = true
-    tags     = merge(local.default_tags, map("Name", local.web_name))
+    tags     = merge(local.default_tags, tomap({"Name"=local.web_name}))
 }
 
 # Create Elastic IP for shell server
 resource "aws_eip" "shell" {
     instance = aws_instance.shell.id
     vpc      = true
-    tags     = merge(local.default_tags, map("Name", local.shell_name))
+    tags     = merge(local.default_tags, tomap({"Name"=local.shell_name}))
 }
 
 
@@ -148,7 +152,7 @@ resource "aws_eip" "shell" {
 resource "aws_ebs_volume" "db_data_journal" {
     availability_zone = local.az
     size              = local.db_ebs_data_size
-    tags              = merge(local.default_tags, map("Name", local.db_name))
+    tags              = merge(local.default_tags, tomap({"Name"=local.db_name}))
 }
 
 # Attach data and journal volume to the instance running the database

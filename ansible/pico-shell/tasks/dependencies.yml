@@ -32,14 +32,14 @@
       'netfilter-persistent',
       'nfs-common',
       'nodejs',
-      'php7.2-cli',       # php5 package deprecated
-      'php7.2-sqlite3',   # used to serve challenge binaries
-      'python-pip',       # used for pam module dependencies
-      'python-virtualenv',
+      'php7.4-cli',       # php5 package deprecated
+      'php7.4-sqlite3',   # used to serve challenge binaries
+      #'python-pip',       # used for pam module dependencies
+      'virtualenv',       #replaced python-virtualenv
       'python3-pip',      # used for shell_manager dependencies
-      'python3.7-dev',
-      'python3.7-venv',
-      'python3.7',        # from PPA, to cover all likely interpreter directives
+      'python3-dev',    # replaced python3.7-dev
+      'python3-venv',
+      #'python3.7',        # from PPA, to cover all likely interpreter directives
       'python3',          # used by shell_manager
       'socat',
       'software-properties-common',
@@ -52,9 +52,9 @@
 - name: Install uwsgi and plugins for shell server
   apt:
     name: [
-        'python-flask',
+        'python3-flask', # replaced  python-flask
         'uwsgi-plugin-php',
-        'uwsgi-plugin-python',
+#        'uwsgi-plugin-python',
         'uwsgi-plugin-python3',
         'uwsgi',
         ]
@@ -75,14 +75,15 @@
 - name: Install system python packages updates needed for pam_auth module and Ansible
   pip:
     name:
-      - cryptography==3.3.2
+      - pyOpenSSL==19.0.0
+      - cryptography==2.7
       - requests==2.22.0
 
 - name: Install python packaging in (new) virtualenv
   pip:
     name: packaging
     virtualenv: "{{ virtualenv_dir }}"
-    virtualenv_python: python3.7
+    virtualenv_python: python3
 
 - name: Install python appdirs
   pip:
@@ -158,7 +159,7 @@
   apt:
     state: present
     force: yes
-    name: 'gdb=8.1-0ubuntu3'
+    name: 'gdb=9.1-0ubuntu1' #old version is gdb=8.1-0ubuntu3
   environment:
     DEBIAN_FRONTEND: noninteractive
 
@@ -197,12 +198,11 @@
 
 - name: Install wetty
   npm:
-    name: wetty
+    name: wetty@2.4.2
     executable: /usr/bin/npm --unsafe-perm=true
     production: yes
     global: no
     path: /opt/wetty
-    version: "2.0.2"
 
 - name: Install quota
   apt:

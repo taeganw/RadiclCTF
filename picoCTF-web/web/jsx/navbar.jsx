@@ -2,6 +2,7 @@ const apiOffline = { News: "/news" };
 
 const teacherLoggedIn = {
   "Challenge Problems": "/problems",
+  Game: "/game",
   Shell: "/shell",
   Scoreboards: "/scoreboard",
   Classroom: "/classroom",
@@ -16,6 +17,7 @@ const teacherLoggedInNoCompetition = {
 
 const userLoggedIn = {
   "Challenge Problems": "/problems",
+  Game: "/game",
   Shell: "/shell",
   Scoreboards: "/scoreboard",
   News: "/news"
@@ -31,7 +33,10 @@ const userNotLoggedIn = {
   News: "/news"
 };
 
-const adminLoggedIn = { Management: "/management" };
+const adminLoggedIn = {
+  Game: "/game",
+  Management: "/management"
+};
 
 const loadNavbar = function(renderNavbarLinks, renderNestedNavbarLinks) {
   const navbarLayout = {

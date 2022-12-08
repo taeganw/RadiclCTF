@@ -1,6 +1,11 @@
 ---
 # Playbook that runs tasks common across all servers
 
+- name: install Python
+  apt:
+    name: python
+    state: present
+
 - include: apt_upgrade.yml
   tags:
     - dependency

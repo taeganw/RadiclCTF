@@ -13,6 +13,7 @@ from api import PicoException
 
 log = logging.getLogger(__name__)
 
+
 __redis = {
     "walrus": None,
     "cache": None,

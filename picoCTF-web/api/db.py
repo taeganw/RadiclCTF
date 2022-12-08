@@ -11,7 +11,6 @@ from pymongo.errors import PyMongoError
 from api import PicoException
 
 log = logging.getLogger(__name__)
-
 __connection = None
 __client = None
 

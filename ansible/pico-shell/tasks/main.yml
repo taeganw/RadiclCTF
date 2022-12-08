@@ -5,6 +5,8 @@
   tags:
     - dependency
 
+- include: upload_problems_and_scripts.yml
+
 - include: shell_manager-config.yml
 
 - include: shell_manager.yml

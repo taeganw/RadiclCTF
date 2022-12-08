@@ -7,6 +7,9 @@
 # 1. Generates and adds an SSH key that will be used by the web server
 # 2. Adds any user requested administrative keys
 
+- name: Gathering Facts
+  setup:
+
 - set_fact:
     web_key: "{{ pico_base_dir}}/{{ playbook_dir | basename }}/fetched/keys/{{ hostvars['web']['ansible_host'] }}"
     web_pub: "{% if ansible_connection=='local' %}{{ pico_base_dir}}/{{ playbook_dir | basename }}{% else %}.{% endif %}/fetched/keys/{{ hostvars['web']['ansible_host'] }}.pub"

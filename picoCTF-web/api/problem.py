@@ -56,7 +56,7 @@ instance_schema = Schema(
     {
         Required("description"): check(("The description must be a string.", [str])),
         Required("hints"): check(("Hints must be a list.", [list])),
-        Required("flag"): check(("The flag must be a string.", [str])),
+        Required("flag"): check(("The flag must be a list.", [list])),
         "port": check(("The port must be an int", [int])),
         "server": check(("The server must be a string.", [str])),
     },
