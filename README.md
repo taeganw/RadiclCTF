@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/taeganw/RadiclCTF/">
-    <img src="radicl.png" alt="Logo" width="80" height="80">
+    <img src="radicl.png" alt="Logo" width="630" height="169">
   </a>
 
   <h3 align="center">RadiclCTF</h3>
@@ -34,7 +34,7 @@
     <a href="https://github.com/picoCTF/picoCTF/"><strong>Explore PicoCTF »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/taeganw/RadiclCTF/RadiclCTF.pdf">Review the Research</a>
+    <a href="https://github.com/taeganw/RadiclCTF/blob/master/RadiclCTF.pdf">Review the Research</a>
     ·
     <a href="https://youtu.be/mGszRJNa6nk">View a Demo</a>
   </p>
